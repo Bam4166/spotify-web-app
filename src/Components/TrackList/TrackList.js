@@ -7,9 +7,8 @@ export class TrackList extends React.Component {
     render() {
         return (
             <div className="TrackList">
-                { 
-                    // map method for Track components 
-                }
+               <Track />
+               { /*map method will be applied on Track */ }
             </div>
         )
     }
