@@ -29,7 +29,7 @@
     background-color: #010c3f;
     text-align: center;
     font-size: .833rem;
-    transition: background-color .25s;
+    transition: all .25s;
     border: 0px;
     color: #fff;
     font-weight: 500;
@@ -37,4 +37,9 @@
   
   .SearchButton:hover {
     background-color: rgba(108, 65, 233, .7);
+    transform:scale(1.1);
+  }
+
+  .SearchButton:active {
+    transform:scale(1.0);
   }
