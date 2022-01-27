@@ -11,7 +11,7 @@ export class App extends React.Component {
       searchResults: [{ name: 'Name1', artist: 'Artist1', album: 'Album1', id: 1 },
       { name: 'Name2', artist: 'Artist2', album: 'Album2', id: 2 } , 
       { name: 'Name3', artist: 'Artist3', album: 'Album3', id: 3 }],
-      playlistName: 'This name',
+      playlistName: 'Playlist Name',
       playlistTracks: [{name: 'Name4', artist: 'Artist4', album: 'Album4', id: 4}]
     }
    }
