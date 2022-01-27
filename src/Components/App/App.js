@@ -3,6 +3,7 @@ import './App.css';
 import {SearchBar} from '../SearchBar/SearchBar';
 import {SearchResults} from '../SearchResults/SearchResults';
 import {Playlist} from '../Playlist/Playlist';
+import Spotify from '../../util/Spotify';
 
 export class App extends React.Component {
   constructor(props){
@@ -43,7 +44,10 @@ export class App extends React.Component {
   }
 
   search(query) {
-    console.log(query);
+    // update state of searchResults with the searchResults value returned from the promise in Spotify.js search method
+    Spotify.search(query).then(searchResults => {
+      this.setState({searchResults: searchResults})
+    })
   }
 
   render() {

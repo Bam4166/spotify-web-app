@@ -1,7 +1,4 @@
-import { SearchBar } from "../Components/SearchBar/SearchBar";
-import { SearchResults } from "../Components/SearchResults/SearchResults";
-
-const clientID = 'c52dad31439244fbbfca7c8f0d3b878f';
+const clientID = 'APIKEY';
 const redirectURI = 'http://localhost:3000';
 let accessToken;
 
@@ -16,29 +13,35 @@ const Spotify = {
         const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
 
         if(accessTokenMatch && expiresInMatch) {
-            /* if we have both matches we set the access token value, a variable for the expiration time, an expiration value for our access token and we clear the parameters so the app doesn't try to grab the access token after it has expired */
+            /* if there are matches on both URL locations, we set the access token value and an expiration value for our access token */
 
             accessToken = accessTokenMatch[1];
             const expiry = Number(expiresInMatch[1]);
+
+            // the following code prevents the app from trying to grab an access token after it has expired
             window.setTimeout(() => accessToken = '', expiry * 1000);
             window.history.pushState('Access Token', null, '/');
             return accessToken;
 
         } else {
-            /* if we don't have a match on access token and expiry time, we redirect users to accessURL */
+            /* if there's no match, users are redirected to accessURL */
             const accessURL = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
             window.location = accessURL;
         }
     },
 
     async search(query) {
+        // request to Spotify's API
         const accessToken = Spotify.getAccessToken();
         return fetch(`https://api.spotify.com/v1/search?type=track&q=${query}`, { headers : {
             Authorization: `Bearer ${accessToken}`}
+            // once the request is fulfilled, the response is converted to json
         }).then(response => {
             return response.json();
         }).then(jsonResponse => {
+            // Verify if there are no songs in the json response, which will return an empty array
             if (!jsonResponse.tracks) return [];
+            // otherwise it returns a mapped jsonresponse object with the id, name, artist, album and uri of the request's query
             return jsonResponse.tracks.items.map(track => ({
                 id: track.id,
                 name: track.name,
