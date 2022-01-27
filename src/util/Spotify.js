@@ -33,11 +33,10 @@ const Spotify = {
     async search(query) {
         // request to Spotify's API
         const accessToken = Spotify.getAccessToken();
-        return fetch(`https://api.spotify.com/v1/search?type=track&q=${query}`, { headers : {
-            Authorization: `Bearer ${accessToken}`}
+        return fetch(`https://api.spotify.com/v1/search?type=track&q=${query}`, { headers : {Authorization: `Bearer ${accessToken}`}
             // once the request is fulfilled, the response is converted to json
         }).then(response => {
-            return response.json();
+            response.json();
         }).then(jsonResponse => {
             // Verify if there are no songs in the json response, which will return an empty array
             if (!jsonResponse.tracks) return [];
@@ -50,6 +49,41 @@ const Spotify = {
                 uri: track.uri
             }));
         });
+    },
+
+    savePlaylist(playlistName, [trackURIs]) {
+        // If there are no track URIs or a playlist name, the save function will break
+        if (!playlistName || !trackURIs.length) return;
+
+        // otherwise three variables are created, one for the current user's accessToken, one for the authorization header containing the user's access token, and lastly an usersID variable initialized with an empty state
+        const accessToken = this.getAccessToken();
+        const headers = { Authorization: `Bearer ${accessToken}`};
+        let userID;
+
+        // fetch request to get the user's id.
+        return fetch('https://api.spotify.com/v1/me', {headers: headers}).then(response => {
+            // once the promise is fulfilled, the response is converted to json
+
+            response.json();
+        }).then(jsonResponse => {
+            // and once this promise is fulfilled, userID is assigned with the id value we got from the jsonResponse
+
+            userID = jsonResponse.id;
+
+            // With the userID, we make a POST request to Spotify's API in order to 
+            
+            return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, 
+                { headers: headers, 
+                method: 'POST',
+                body: JSON.stringify({ playlistName: playlistName})
+            })
+            // once this promise is fulfilled, the response is converted  to json
+        }).then(response => {
+            response.json();
+            // and finally, the id parameter is returned from jsonResponse and stored in playlistID 
+        }).then(jsonResponse => {
+            const playlistID = jsonResponse.id;
+        })    
     }
 }
 
