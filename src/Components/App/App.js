@@ -7,8 +7,6 @@ import {Playlist} from '../Playlist/Playlist';
 export class App extends React.Component {
   constructor(props){
     super(props);
-    this.addTrack = this.addTrack.bind(this);
-    this.removeTrack = this.removeTrack.bind(this);
     this.state = { 
       searchResults: [{ name: 'Name1', artist: 'Artist1', album: 'Album1', id: 1 },
       { name: 'Name2', artist: 'Artist2', album: 'Album2', id: 2 } , 
@@ -16,6 +14,9 @@ export class App extends React.Component {
       playlistName: 'Playlist Name',
       playlistTracks: [{name: 'Name4', artist: 'Artist4', album: 'Album4', id: 4}]
     }
+    this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
    }
 
   addTrack(track) {
@@ -31,6 +32,10 @@ export class App extends React.Component {
     this.setState({playlistTracks: tracks});
   }
 
+  updatePlaylistName(name) {
+    this.setState({playlistName: name});
+  }
+
   render() {
     return (
       <div>
@@ -42,7 +47,8 @@ export class App extends React.Component {
                               onAdd={this.addTrack} />
              <Playlist playlistName={this.state.playlistName} 
                           playlistTracks={this.state.playlistTracks}
-                          onRemove={this.removeTrack} />
+                          onRemove={this.removeTrack}
+                          onNameChange={this.updatePlaylistName} />
           </div>
         </div>
       </div>
