@@ -8,6 +8,7 @@ constructor(props) {
   this.handleNameChange = this.handleNameChange.bind(this);
 }
 
+  // passes the event target value to onNameChange property, which in turn updates the playlistName state through updatePlaylistName method in App.js
   handleNameChange(e) {
     this.props.onNameChange(e.target.value);
   }

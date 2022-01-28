@@ -11,12 +11,14 @@ export class SearchBar extends React.Component {
     this.handleQueryChange = this.handleQueryChange.bind(this);
   }
 
-  search() {
-    this.props.onSearch(this.state.query);
-  }
-
+  // update the state with the event.target.value from the search bar 
   handleQueryChange(e) {
     this.setState({query: e.target.value});
+  }
+
+  // passes the SearchBar state to the onSearch props passed in App.js when we click the search button
+  search() {
+    this.props.onSearch(this.state.query);
   }
 
   render() {
@@ -24,10 +26,9 @@ export class SearchBar extends React.Component {
       <div className="SearchBar">
         <input placeholder="Search Songs, Albums or Artists"
                 onChange={this.handleQueryChange} />
-        <button className="SearchButton">SEARCH</button>
+        <button className="SearchButton" onClick={this.props.onSearch}>SEARCH</button>
       </div>
     )
   }
 
 }
-
