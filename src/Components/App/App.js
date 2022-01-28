@@ -13,8 +13,6 @@ export class App extends React.Component {
       playlistName: 'New Playlist',
       playlistTracks: []
     }
-
-    // this binds
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);

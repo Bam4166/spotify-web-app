@@ -1,4 +1,4 @@
-const clientID = 'c52dad31439244fbbfca7c8f0d3b878f';
+const clientID = '<API KEY HERE>';
 const redirectURI = 'http://localhost:3000';
 let accessToken;
 
